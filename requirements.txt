@@ -1,0 +1,33 @@
+fastapi==0.111.0
+uvicorn[standard]==0.29.0
+pydantic==2.7.1
+pydantic-settings==2.3.0
+
+# Data
+yfinance==0.2.40
+pandas==2.2.2
+numpy==1.26.4
+scikit-learn==1.5.0
+
+# TensorFlow
+tensorflow==2.16.1
+keras-tuner==1.4.7
+
+# Technical Analysis
+pandas-ta==0.3.14b0
+
+# Explainability
+shap==0.45.1
+
+# Async + Queue
+redis==5.0.4
+aiohttp==3.9.5
+httpx==0.27.0
+
+# Utils
+python-multipart==0.0.9
+python-dotenv==1.0.1
+loguru==0.7.2
+tenacity==8.3.0
+filelock==3.14.0
+orjson==3.10.3

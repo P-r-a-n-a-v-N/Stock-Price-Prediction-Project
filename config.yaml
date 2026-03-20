@@ -1,0 +1,85 @@
+# configs/config.yaml
+# Central configuration for StockPredictor-TF
+# Loaded by training scripts and referenced by documentation.
+
+# ── Data ──────────────────────────────────────────────────────────────────────
+data:
+  default_period_days: 1095        # 3 years of history for training
+  prediction_period_days: 365      # 1 year for inference window
+  seq_length: 60                   # lookback window (trading days)
+  val_split: 0.15
+  test_split: 0.10
+  include_macro: true
+  macro_tickers:
+    - "^VIX"                       # Volatility index
+    - "GC=F"                       # Gold futures
+    - "^TNX"                       # 10-year treasury yield
+    - "DX-Y.NYB"                   # USD index
+    - "^GSPC"                      # S&P 500
+
+# ── Model architecture ────────────────────────────────────────────────────────
+model:
+  lstm_units: 128
+  lstm_layers: 2
+  num_transformer_blocks: 2
+  embed_dim: 64
+  num_heads: 4
+  ff_dim: 128
+  dropout_rate: 0.15
+
+# ── Training ──────────────────────────────────────────────────────────────────
+training:
+  default_epochs: 50
+  batch_size: 32
+  learning_rate: 0.0005
+  lr_clipnorm: 1.0
+  loss: "huber"
+  huber_delta: 1.0
+
+  early_stopping:
+    monitor: "val_loss"
+    patience: 10
+    restore_best_weights: true
+
+  reduce_lr:
+    monitor: "val_loss"
+    factor: 0.5
+    patience: 5
+    min_lr: 0.000001
+
+# ── Supported tickers (popular defaults) ────────────────────────────────────
+tickers:
+  popular:
+    - AAPL
+    - TSLA
+    - MSFT
+    - NVDA
+    - AMZN
+    - GOOGL
+    - META
+    - NFLX
+    - AMD
+    - INTC
+    - JPM
+    - RELIANCE.NS
+    - TCS.NS
+
+# ── Prediction horizons ───────────────────────────────────────────────────────
+horizons:
+  allowed: [1, 3, 7, 14, 30]
+  default: 7
+
+# ── Services ─────────────────────────────────────────────────────────────────
+services:
+  ml_service_port: 8000
+  backend_port: 5000
+  frontend_port: 3000
+
+  redis:
+    prediction_cache_ttl: 900      # 15 min
+    stock_data_cache_ttl: 300      # 5 min
+    quote_cache_ttl: 60            # 1 min
+
+  mongodb:
+    prediction_ttl_days: 7
+    job_ttl_days: 30
