@@ -7,7 +7,7 @@ function deriveSignal(predictionData) {
   const lastClose = predictionData.last_close;
   const finalPred = predictionData.predictions[predictionData.predictions.length - 1]?.price;
   if (!finalPred) return null;
-
+  
   const pctChange = ((finalPred - lastClose) / lastClose) * 100;
 
   // Simple rule-based signal thresholds
