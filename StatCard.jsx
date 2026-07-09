@@ -4,7 +4,7 @@ import { TrendingUp, TrendingDown } from 'lucide-react';
 export function StatCard({ label, value, sub, trend, className = '' }) {
   const isUp   = trend > 0;
   const isDown = trend < 0;
-
+  
   return (
     <div className={`card flex flex-col gap-2 ${className}`}>
       <span className="stat-label">{label}</span>
